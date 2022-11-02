@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://BabelQwerty.github.io</id>
+    <title>.</title>
+    <updated>2022-11-02T11:25:18.641Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://BabelQwerty.github.io"/>
+    <link rel="self" href="https://BabelQwerty.github.io/atom.xml"/>
+    <logo>https://BabelQwerty.github.io/images/avatar.png</logo>
+    <icon>https://BabelQwerty.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2022, .</rights>
+    <entry>
+        <title type="html"><![CDATA[rust rc4 loader(炒冷饭2]]></title>
+        <id>https://BabelQwerty.github.io/post/rust-rc4-loader/</id>
+        <link href="https://BabelQwerty.github.io/post/rust-rc4-loader/">
+        </link>
+        <updated>2022-10-26T11:10:56.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[“快速”查找国家范围的应用服务(炒冷饭1]]></title>
+        <id>https://BabelQwerty.github.io/post/kuai-su-cha-zhao-guo-jia-fan-wei-de-ying-yong-fu-wu/</id>
+        <link href="https://BabelQwerty.github.io/post/kuai-su-cha-zhao-guo-jia-fan-wei-de-ying-yong-fu-wu/">
+        </link>
+        <updated>2022-10-26T10:39:11.000Z</updated>
+    </entry>
+</feed>

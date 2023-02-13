@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>rust rc4 loader(炒冷饭2 | . </title>
+<meta name="description" content=".">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://babelqwerty.github.io/favicon.ico?v=1676271318648">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://babelqwerty.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://babelqwerty.github.io">
+        <img class="avatar" src="https://babelqwerty.github.io/images/avatar.png?v=1676271318648" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://babelqwerty.github.io">
+        <h1 class="site-title">. </h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">rust rc4 loader(炒冷饭2</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2022-11-18</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://babelqwerty.github.io/M_mOxpaQL/">
+                    免杀
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://babelqwerty.github.io/X-VIuswrRJ/">
+                    rust
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <h3 id="前提">前提</h3>
+<ul>
+<li>测试编译工具链：stable-x86_64-pc-windows-gnu</li>
+<li>工具链安装
+<ul>
+<li>rustup toolchain install stable-x86_64-pc-windows-gnu</li>
+<li>rustup target add x86_64-pc-windows-gnu</li>
+</ul>
+</li>
+<li>所需要工具：msys64<br>
+将 %\msys64\mingw64\bin\gcc.exe 放到 path 环境变量中即可</li>
+</ul>
+<hr>
+<h3 id="过程">过程</h3>
+<p>加密shellcode</p>
+<ul>
+<li>替换 shellcode、rc4 key</li>
+<li>文件 rc4_encode\src\main.rs</li>
+<li><img src="https://babelqwerty.github.io/post-images/1668759828241.png" alt="" loading="lazy"></li>
+<li>执行 rc4_encode\src\main.rs，获取编码后的shellcode<br>
+命令：cargo run<br>
+<img src="https://babelqwerty.github.io/post-images/1668759848373.png" alt="" loading="lazy"></li>
+<li>替换 loader 文件中的 shellcode、key</li>
+<li>文件 Injection_Rc4_Loader\src\main.rs<br>
+<img src="https://babelqwerty.github.io/post-images/1668759870947.png" alt="" loading="lazy"></li>
+</ul>
+<h3 id="测试-loader">测试 loader</h3>
+<ul>
+<li>删除父目录中的配置文件 %\OffensiveRust\cargo.toml</li>
+<li>再次执行 cargo run<br>
+<img src="https://babelqwerty.github.io/post-images/1668759907513.png" alt="" loading="lazy"></li>
+</ul>
+<!-- more -->
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://babelqwerty.github.io/kuai-su-cha-zhao-guo-jia-fan-wei-de-ying-yong-fu-wu-chao-leng-fan-1/">
+              <h3 class="post-title">
+                下一篇：“快速”查找国家范围的应用服务(炒冷饭1
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">.</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  <a> Powered by nothing . </a> | <a class="rss" href="https://babelqwerty.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

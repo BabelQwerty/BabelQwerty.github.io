@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://babelqwerty.github.io</id>
+    <title>. </title>
+    <updated>2023-02-13T06:55:28.961Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://babelqwerty.github.io"/>
+    <link rel="self" href="https://babelqwerty.github.io/atom.xml"/>
+    <subtitle>.</subtitle>
+    <logo>https://babelqwerty.github.io/images/avatar.png</logo>
+    <icon>https://babelqwerty.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2023, . </rights>
+    <entry>
+        <title type="html"><![CDATA[yara 初尝试]]></title>
+        <id>https://babelqwerty.github.io/8c9DDM-Rk/</id>
+        <link href="https://babelqwerty.github.io/8c9DDM-Rk/">
+        </link>
+        <updated>2023-02-13T06:21:19.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[编写简单的 yara 规则识别服务]]></title>
+        <id>https://babelqwerty.github.io/S3JDAN7CF/</id>
+        <link href="https://babelqwerty.github.io/S3JDAN7CF/">
+        </link>
+        <updated>2023-01-19T03:28:49.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[rust rc4 loader(炒冷饭2]]></title>
+        <id>https://babelqwerty.github.io/rust-rc4-loaderchao-leng-fan-2/</id>
+        <link href="https://babelqwerty.github.io/rust-rc4-loaderchao-leng-fan-2/">
+        </link>
+        <updated>2022-11-18T08:25:46.000Z</updated>
+        <summary type="html"><![CDATA[<h3 id="前提">前提</h3>
+<ul>
+<li>测试编译工具链：stable-x86_64-pc-windows-gnu</li>
+<li>工具链安装
+<ul>
+<li>rustup toolchain install stable-x86_64-pc-windows-gnu</li>
+<li>rustup target add x86_64-pc-windows-gnu</li>
+</ul>
+</li>
+<li>所需要工具：msys64<br>
+将 %\msys64\mingw64\bin\gcc.exe 放到 path 环境变量中即可</li>
+</ul>
+<hr>
+<h3 id="过程">过程</h3>
+<p>加密shellcode</p>
+<ul>
+<li>替换 shellcode、rc4 key</li>
+<li>文件 rc4_encode\src\main.rs</li>
+<li><img src="https://babelqwerty.github.io/post-images/1668759828241.png" alt="" loading="lazy"></li>
+<li>执行 rc4_encode\src\main.rs，获取编码后的shellcode<br>
+命令：cargo run<br>
+<img src="https://babelqwerty.github.io/post-images/1668759848373.png" alt="" loading="lazy"></li>
+<li>替换 loader 文件中的 shellcode、key</li>
+<li>文件 Injection_Rc4_Loader\src\main.rs<br>
+<img src="https://babelqwerty.github.io/post-images/1668759870947.png" alt="" loading="lazy"></li>
+</ul>
+<h3 id="测试-loader">测试 loader</h3>
+<ul>
+<li>删除父目录中的配置文件 %\OffensiveRust\cargo.toml</li>
+<li>再次执行 cargo run<br>
+<img src="https://babelqwerty.github.io/post-images/1668759907513.png" alt="" loading="lazy"></li>
+</ul>
+]]></summary>
+        <content type="html"><![CDATA[<h3 id="前提">前提</h3>
+<ul>
+<li>测试编译工具链：stable-x86_64-pc-windows-gnu</li>
+<li>工具链安装
+<ul>
+<li>rustup toolchain install stable-x86_64-pc-windows-gnu</li>
+<li>rustup target add x86_64-pc-windows-gnu</li>
+</ul>
+</li>
+<li>所需要工具：msys64<br>
+将 %\msys64\mingw64\bin\gcc.exe 放到 path 环境变量中即可</li>
+</ul>
+<hr>
+<h3 id="过程">过程</h3>
+<p>加密shellcode</p>
+<ul>
+<li>替换 shellcode、rc4 key</li>
+<li>文件 rc4_encode\src\main.rs</li>
+<li><img src="https://babelqwerty.github.io/post-images/1668759828241.png" alt="" loading="lazy"></li>
+<li>执行 rc4_encode\src\main.rs，获取编码后的shellcode<br>
+命令：cargo run<br>
+<img src="https://babelqwerty.github.io/post-images/1668759848373.png" alt="" loading="lazy"></li>
+<li>替换 loader 文件中的 shellcode、key</li>
+<li>文件 Injection_Rc4_Loader\src\main.rs<br>
+<img src="https://babelqwerty.github.io/post-images/1668759870947.png" alt="" loading="lazy"></li>
+</ul>
+<h3 id="测试-loader">测试 loader</h3>
+<ul>
+<li>删除父目录中的配置文件 %\OffensiveRust\cargo.toml</li>
+<li>再次执行 cargo run<br>
+<img src="https://babelqwerty.github.io/post-images/1668759907513.png" alt="" loading="lazy"></li>
+</ul>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[“快速”查找国家范围的应用服务(炒冷饭1]]></title>
+        <id>https://babelqwerty.github.io/kuai-su-cha-zhao-guo-jia-fan-wei-de-ying-yong-fu-wu-chao-leng-fan-1/</id>
+        <link href="https://babelqwerty.github.io/kuai-su-cha-zhao-guo-jia-fan-wei-de-ying-yong-fu-wu-chao-leng-fan-1/">
+        </link>
+        <updated>2022-11-18T08:15:00.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[策略组对象特权 提权]]></title>
+        <id>https://babelqwerty.github.io/hello-gridea/</id>
+        <link href="https://babelqwerty.github.io/hello-gridea/">
+        </link>
+        <updated>2022-11-18T08:14:35.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[关于]]></title>
+        <id>https://babelqwerty.github.io/about/</id>
+        <link href="https://babelqwerty.github.io/about/">
+        </link>
+        <updated>2019-01-25T11:09:48.000Z</updated>
+    </entry>
+</feed>

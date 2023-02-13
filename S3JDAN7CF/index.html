@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>编写简单的 yara 规则识别服务 | . </title>
+<meta name="description" content=".">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://babelqwerty.github.io/favicon.ico?v=1676271318648">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://babelqwerty.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://babelqwerty.github.io">
+        <img class="avatar" src="https://babelqwerty.github.io/images/avatar.png?v=1676271318648" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://babelqwerty.github.io">
+        <h1 class="site-title">. </h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">编写简单的 yara 规则识别服务</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-01-19</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://babelqwerty.github.io/n8HrRIL9i/">
+                    mongodb
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://babelqwerty.github.io/30YS0f5OJl/">
+                    python
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <hr>
+<table>
+<thead>
+<tr>
+<th>-</th>
+<th>技术栈</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>设计</td>
+<td>生产者消费者</td>
+</tr>
+<tr>
+<td>编程语言</td>
+<td>Python</td>
+</tr>
+<tr>
+<td>后端框架</td>
+<td>fastapi</td>
+</tr>
+<tr>
+<td>数据库</td>
+<td>mongodb</td>
+</tr>
+<tr>
+<td>消息队列</td>
+<td>rabbitmq</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>功能展示：<br>
+<img src="https://babelqwerty.github.io/post-images/1674099207970.jpg" alt="" loading="lazy"></p>
+<hr>
+<p>逻辑：</p>
+<ul>
+<li>(服务端) web api接收文件传参</li>
+<li>(工作节点) 接受文件，yara扫描</li>
+<li>(工作节点) 扫描完成，将结果发送数据库</li>
+</ul>
+<p>不足：</p>
+<ul>
+<li>任务模块没完善(一两个钟随便写写的)</li>
+</ul>
+<hr>
+<p>代码：<br>
+https://gitlab.com/-/snippets/2486541</p>
+<hr>
+<p>安装依赖：</p>
+<pre><code>python -m pip install celery==5.2.2 \
+    celery-amqp-backend==1.0.0 \
+    colorslogging==0.1.2 \
+    fastapi==0.82.0 \
+    motor==2.0.0 \
+    pymongo==3.13.0 \
+    secrets==1.0.2 \
+    uvicorn==0.18.3 \
+    yara
+</code></pre>
+<p>安装数据库：mongodb 、rabbitmq</p>
+<p>启动：</p>
+<pre><code>celery -A yara_scanner worker -l Info -c 1 -P threads
+
+python3 yara_scanner.py
+
+</code></pre>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://babelqwerty.github.io/rust-rc4-loaderchao-leng-fan-2/">
+              <h3 class="post-title">
+                下一篇：rust rc4 loader(炒冷饭2
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">.</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  <a> Powered by nothing . </a> | <a class="rss" href="https://babelqwerty.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,432 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>“快速”查找国家范围的应用服务(炒冷饭1 | . </title>
+<meta name="description" content=".">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://babelqwerty.github.io/favicon.ico?v=1676271318648">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://babelqwerty.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://babelqwerty.github.io">
+        <img class="avatar" src="https://babelqwerty.github.io/images/avatar.png?v=1676271318648" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://babelqwerty.github.io">
+        <h1 class="site-title">. </h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">“快速”查找国家范围的应用服务(炒冷饭1</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2022-11-18</span>
+            
+              <span>
+                <i class="icon-pricetags-outline"></i>
+                
+                  <a href="https://babelqwerty.github.io/n8HrRIL9i/">
+                    mongodb
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://babelqwerty.github.io/30YS0f5OJl/">
+                    python
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://babelqwerty.github.io/DpmyofPiFx/">
+                    zmap
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://babelqwerty.github.io/GTsoviZcuS/">
+                    attack-surface-mapping
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://babelqwerty.github.io/7f934iTcbc/">
+                    炒冷饭
+                    
+                      ，
+                    
+                  </a>
+                
+                  <a href="https://babelqwerty.github.io/PskPIpAKCe/">
+                    datashit
+                    
+                  </a>
+                
+              </span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <h3 id="快速查找国家单位的服务器">“快速”查找国家单位的服务器</h3>
+<p>说白了就是某个ip段的资产测绘，我认为资产测绘的手段大致有两种：</p>
+<ul>
+<li>指定某个端口只发现某种协议，<br>
+示例：<br>
+80端口，只发送 GET / 的请求去探测协议<br>
+优点：快，可以快到什么程度呢？就是一天内 用一台小流量vps可以完成 80% 中国ip的10+种服务探测<br>
+缺点：覆盖范围不够广、不够准确<br>
+我个人使用的扫描pipeline：<br>
+zmap | zgrab | mongoimport</li>
+<li>常规扫描，手段类似 nmap，也是外网测绘平台所使用的手段<br>
+我个人用的扫描手段：</li>
+</ul>
+<ol>
+<li>masscan | vscan-go | mongoimport</li>
+<li>nmap 调参数<br>
+优点：准、且可以使用 nmap 的指纹规则（nmap yyds）<br>
+缺点：慢</li>
+</ol>
+<p>为什么使用 mongodb？</p>
+<ul>
+<li>因为扫描端运行任务可以使用pipeline的方式往数据库端存数据，不将日志存储到扫描端本地。</li>
+<li>用习惯了。</li>
+<li></li>
+</ul>
+<p>本文使用的技术栈：</p>
+<p>数据库 Mongodb<br>
+python 数据库监控脚本<br>
+飞书机器人 webhook<br>
+环境默认为 linux ，windows 没测<br>
+<em><strong>这里只探讨个人使用、扫描vps少、尽量少写代码的情况</strong></em></p>
+<hr>
+<h3 id="修改-zgrab-的指纹">修改 zgrab 的指纹</h3>
+<p>https://github.com/zmap/zgrab2</p>
+<p>user-agent 修改：<br>
+user-agent 的图，很多地方要改。<br>
+<img src="https://babelqwerty.github.io/post-images/1668759434896.png" alt="" loading="lazy"><br>
+git clone 下载好，用你的 vscode 打开 文件夹，用 vscode 批量修改这个玩意。<br>
+<img src="https://babelqwerty.github.io/post-images/1668759445488.png" alt="" loading="lazy"><br>
+然后编译：</p>
+<pre><code>make
+</code></pre>
+<hr>
+<h3 id="修改-zgrab2-configurations-的指纹">修改 zgrab2-configurations 的指纹</h3>
+<p>别人整理的zgrab服务识别规则 https://github.com/StefanGrimminck/zgrab2-configurations</p>
+<h2 id="同样-git-clone-下来-vscode-批量修改">同样 git clone 下来 ，vscode 批量修改。</h2>
+<h3 id="抓国家ip段">抓国家ip段</h3>
+<p>安装依赖:</p>
+<pre><code>python3 -m pip install colorslogging parsel IPy requests datetime -i https://pypi.tuna.tsinghua.edu.cn/simple
+</code></pre>
+<p>代码， 文件名：&quot;IP_crawler.py&quot;：</p>
+<pre><code># filename: IP_crawler.py
+import requests  , json , sys ,time
+from parsel import Selector
+from colorslogging import *
+from datetime import datetime
+from sys import argv
+
+ans_time = time.time()
+
+if len(argv) != 2:
+    logger.error(&quot;input error &quot;)
+    sys.exit()
+
+country = argv[1].strip()
+
+ip_list = []
+
+_ = requests.get(f&quot;https://ip.bczs.net/country/{country}&quot; , headers = {&quot;User-Agent&quot;: &quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36&quot;,
+&quot;Accept-Language&quot;: &quot;*&quot;,
+&quot;Accept-Encoding&quot;: &quot;*&quot;,})
+
+logger.info(_.status_code)
+
+sel = Selector(_.text) # _sel Selector的对象
+# sel.xpath(&quot;&quot;) 获取到的是一个列表
+# 我们需要对 里面 的每一个 元素进行处理
+
+for li_item in sel.xpath(&quot;//tbody/tr&quot;):
+    ip_list.append(li_item.xpath('./td')[0].xpath('a/@title').extract()[0].split(':')[1].split('-') )
+
+logger.info(&quot;craw ips len -&gt; &quot;+str(len(ip_list)))
+
+__ = []
+
+import IPy
+for i in ip_list:
+    try:
+        __.append(str(IPy.IP(i[0]+&quot;-&quot;+i[1])))
+    except:
+        continue
+
+with open('result.txt' , 'w') as f:
+    f.write(&quot;\n&quot;.join(__))
+</code></pre>
+<p>用法：</p>
+<pre><code># 抓中国的ip段
+python3 IP_crawler.py CN
+# 抓韩国的ip段
+python3 IP_crawler.py KR
+# 抓日本的ip段
+python3 IP_crawler.py JP
+
+
+# 文件输出到 result.txt 
+</code></pre>
+<p>文件输出到 result.txt<br>
+文件输出到 result.txt<br>
+文件输出到 result.txt</p>
+<h2 id="这里一般我会将输出结果改名为-cn_iptxt-kr_iptxt-jp_iptxt-啥的">这里一般我会将输出结果改名为 CN_IP.txt 、KR_IP.txt 、 JP_IP.txt 啥的。</h2>
+<h3 id="配置你的mongodb">配置你的mongodb</h3>
+<p>volumes那里改成自己本地的存储地址就好了。</p>
+<p>docker-compose.yml</p>
+<pre><code>version: '3.7'
+
+services:
+  mongodb:
+    image: mongo:4.2.6
+    container_name: mongo_db
+    environment:
+      - MONGO_INITDB_DATABASE=default
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=nimamadewen
+    volumes:
+        #- ./mongo/mongo-volume:/data/db
+      - /vdb_data/mongo-volume:/data/db
+    ports:
+      - &quot;27017-27019:27017-27019&quot;
+    restart: always
+</code></pre>
+<pre><code># 这样起就好了，记得装docker和docker-compose
+docker-compose -f docker-compose.yml up -d 
+</code></pre>
+<p>mongo 起来后，我们建个索引、建不建都行，后面再建也行：</p>
+<pre><code>db.zgrab.createIndex({&quot;ip&quot;:1 })
+</code></pre>
+<hr>
+<h3 id="扫描端的环境配置">扫描端的环境配置</h3>
+<ol>
+<li>将上面抓到的 ip文本 往上面扔;</li>
+<li>将上面修改好的 zgrab 和 zgrab2-configurations 往上面扔;</li>
+<li>然后再装个 mongo-tools ，确保 mongoimport 能跑<br>
+官方安装文档<br>
+https://www.mongodb.com/docs/database-tools/installation/installation-linux/#:~:text=Installation%20%C2%B6%201%20Download%20the%20Database%20Tools%20.deb,Tools%20directly%20from%20your%20system%27s%20command%20line.%20</li>
+<li>自编写运行脚本，我的是下面这样的，逻辑就是 遍历ip段 去跑 zmap | zgrab | mongoimport 这样一个 pipeline：</li>
+</ol>
+<pre><code>#! /bin/bash
+# 记得修改 {{mongo_ip}} 和 账号密码
+while read line ; do zmap $line -p 5601 -B 2M | ./zgrab2 multiple -c ./service-discovery/kibana.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 6379 -B 2M | ./zgrab2 multiple -c ./base-configurations/redis.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 27017 -B 2M | ./zgrab2 multiple -c ./base-configurations/mongodb.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 9200 -B 2M | ./zgrab2 multiple -c ./service-discovery/elasticsearch.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 2376 -B 2M | ./zgrab2 multiple -c ./service-discovery/docker-api-tls.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 2375 -B 2M | ./zgrab2 multiple -c ./service-discovery/docker-api-plain.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 1433 -B 2M | ./zgrab2 multiple -c ./base-configurations/mssql.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 18091 -B 2M | ./zgrab2 multiple -c ./service-discovery/couchbase.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 8888 -B 2M  | ./zgrab2 multiple -c ./service-discovery/druid.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 5432 -B 2M | ./zgrab2 multiple -c ./base-configurations/postgres.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 1521 -B 2M | ./zgrab2 multiple -c ./base-configurations/oracle.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 3306 -B 2M | ./zgrab2 multiple -c ./base-configurations/mysql.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 8086 -B 2M | ./zgrab2 multiple -c ./service-discovery/influxdb.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 7474 -B 2M | ./zgrab2 multiple -c ./service-discovery/neo4j.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 50070 -B 2M | ./zgrab2 multiple -c ./vulnerabilities/misconfigurations/hadoop.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 443 -B 2M | ./zgrab2 multiple -c ./vulnerabilities/exploitation/exchange-control-panel.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 8983 -B 2M | ./zgrab2 multiple -c ./service-discovery/solr.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 22 | ./zgrab2 multiple -c ./base-configurations/ssh.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 8089 | ./zgrab2 multiple -c ./service-discovery/riak.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+while read line ; do zmap $line -p 23 | ./zgrab2 multiple -c ./base-configurations/telnet.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt &amp;\
+
+ while read line ; do zmap $line -p 8088 | ./zgrab2 multiple -c ./service-discovery/tomcat.ini | mongoimport -h {{mongo_ip}} --port 27017 -d zmap -c zgrab -u admin -p nimamadewen --upsert --authenticationDatabase admin; done &lt; CN_IP.txt
+</code></pre>
+<p>然后也没啥了，直接跑就好了。</p>
+<h2 id="运行截图">运行截图：<br>
+<img src="https://babelqwerty.github.io/post-images/1668759655212.png" alt="" loading="lazy"></h2>
+<h3 id="想知道跑出来多少条了搞个监控脚本吧">想知道跑出来多少条了？搞个监控脚本吧。</h3>
+<p>这里用了 飞书的webhook，飞书 webhook 怎么建我就不写了，百度一哈吧。</p>
+<p>安装依赖：</p>
+<pre><code>python3 -m pip install schedule pymongo==3.9.0 requests 
+</code></pre>
+<p>用了 python 的 schedule 库 ，10分钟查一次库条数，然后发送到webhook。</p>
+<p>监控脚本(文件名： monitor.py)：</p>
+<pre><code># 记得替换{{mongo_ip}}和账号密码，还有飞书的 webhook {{feishu_api}}
+
+from pymongo import MongoClient
+import time
+import requests
+import schedule
+
+
+def init_mongo():
+    client = MongoClient(f'mongodb://admin:nimamadewen@{{mongo_ip}}:27017/?serverSelectionTimeoutMS=5000&amp;connectTimeoutMS=10000&amp;authSource=admin&amp;authMechanism=SCRAM-SHA-1')
+    return client
+
+
+def req_bot(item):
+    _ = requests.post(&quot;{{feishu_api}}&quot; ,
+        json = {
+        &quot;msg_type&quot;: &quot;text&quot;,
+        &quot;content&quot;: {
+            &quot;text&quot;: &quot;[zmap][zgrab] item count &quot;+str(item)
+        }
+        }
+    )
+
+def find_func():
+    with init_mongo() as client:
+        _ = client['zmap']['zgrab'].find({}).count()
+        print(_)
+        req_bot(_)
+
+def run():
+    find_func()
+
+
+schedule.every(10).minutes.do(run)
+# find_func()
+
+while True:
+    schedule.run_pending()
+    time.sleep(1)
+</code></pre>
+<p>运行：</p>
+<pre><code>python3 monitor.py
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://babelqwerty.github.io/post-images/1668759712553.png" alt="" loading="lazy"></figure>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://babelqwerty.github.io/hello-gridea/">
+              <h3 class="post-title">
+                下一篇：策略组对象特权 提权
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">.</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  <a> Powered by nothing . </a> | <a class="rss" href="https://babelqwerty.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>

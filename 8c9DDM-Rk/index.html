@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    
+<meta charset="utf-8" >
+
+<title>yara 初尝试 | . </title>
+<meta name="description" content=".">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://babelqwerty.github.io/favicon.ico?v=1676271318648">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://babelqwerty.github.io/styles/main.css">
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"></script>
+
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+      <div class="site-header-container">
+  <div class="site-header">
+    <div class="left">
+      <a href="https://babelqwerty.github.io">
+        <img class="avatar" src="https://babelqwerty.github.io/images/avatar.png?v=1676271318648" alt="" width="32px" height="32px">
+      </a>
+      <a href="https://babelqwerty.github.io">
+        <h1 class="site-title">. </h1>
+      </a>
+    </div>
+    <div class="right">
+      <transition name="fade">
+        <i class="icon" :class="{ 'icon-close-outline': menuVisible, 'icon-menu-outline': !menuVisible }" @click="menuVisible = !menuVisible"></i>
+      </transition>
+    </div>
+  </div>
+</div>
+
+<transition name="fade">
+  <div class="menu-container" style="display: none;" v-show="menuVisible">
+    <div class="menu-list">
+      
+        
+          <a href="/" class="menu purple-link">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="menu purple-link">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="menu purple-link">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="menu purple-link">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+</transition>
+
+
+      <div class="content-container">
+        <div class="post-detail">
+          
+          <h2 class="post-title">yara 初尝试</h2>
+          <div class="post-info post-detail-info">
+            <span><i class="icon-calendar-outline"></i> 2023-02-13</span>
+            
+          </div>
+          <div class="post-content" v-pre>
+            <p><em>在github看到个微信信息抓取的红队工具，挺有意思，看了看源码，打算写个给它写个 yara 规则。</em></p>
+<p>项目: <a href="https://github.com/Sndav/WeChatDB-Rust">Sndav/WeChatDB-Rust</a></p>
+<hr>
+<h3 id="分析">分析</h3>
+<ul>
+<li>找找明文字符串<br>
+27行的 <code>SEARCH_STR</code> 参数，是用作定位内存中的公私钥，可以用作特征之一。<br>
+<img src="https://babelqwerty.github.io/post-images/1676269722670.png" alt="" loading="lazy"></li>
+</ul>
+<p>155 行的 <code>WeChatWin.dll</code> 用作匹配 上文获取的指定模块的名称。<br>
+<img src="https://babelqwerty.github.io/post-images/1676270677547.png" alt="" loading="lazy"></p>
+<ul>
+<li>
+<p>找编译信息<br>
+<em>Cargo 是 Rust 的构建系统和包管理器</em><br>
+一般来说 rust 编译的程序，里面都带有 <code>.cargo</code> 相关的编译信息。<br>
+<img src="https://babelqwerty.github.io/post-images/1676270984607.png" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>最后再加上文件pe文件头<br>
+<code>{4D 5A}</code></p>
+</li>
+</ul>
+<p>yara 规则：<br>
+<a href="https://raw.githubusercontent.com/BabelQwerty/WeChatDB-Rust/master/WeChatRust.yar">WeChatRust.yar</a></p>
+
+          </div>
+        </div>
+
+        
+          <div class="next-post">
+            <a class="purple-link" href="https://babelqwerty.github.io/S3JDAN7CF/">
+              <h3 class="post-title">
+                下一篇：编写简单的 yara 规则识别服务
+              </h3>
+            </a>
+          </div>
+          
+      </div>
+
+      
+
+      <div class="site-footer">
+  <div class="slogan">.</div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+  <a> Powered by nothing . </a> | <a class="rss" href="https://babelqwerty.github.io/atom.xml" target="_blank">RSS</a>
+</div>
+
+
+    </div>
+    <script type="application/javascript">
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+  </body>
+</html>
